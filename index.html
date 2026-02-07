@@ -24,18 +24,39 @@ body::before {
   height: 100%;
   background: url('us.jpg') center/cover no-repeat;
   filter: blur(25px) brightness(40%);
-  z-index: -1;
+  z-index: -2;
 }
 
-/* Spotify Card */
+/* Floating petals */
+.petal {
+  position: absolute;
+  top: -20px;
+  font-size: 20px;
+  animation: fall linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* Card */
 .player {
   background: rgba(20,20,20,0.9);
   width: 320px;
   padding: 25px;
   border-radius: 20px;
   text-align: center;
-  box-shadow: 0 0 40px #ff1a1a40;
+  box-shadow: 0 0 30px #ff4d6d60;
   color: white;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px #ff4d6d40; }
+  to { box-shadow: 0 0 40px #ff4d6d80; }
 }
 
 /* Album Cover */
@@ -45,12 +66,12 @@ body::before {
   object-fit: cover;
   border-radius: 15px;
   margin-bottom: 15px;
-  box-shadow: 0 0 20px #ff1a1a80;
-  transition: transform 0.4s ease;
+  animation: slowZoom 6s infinite alternate;
 }
 
-.cover:hover {
-  transform: scale(1.05);
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
 }
 
 .song {
@@ -61,7 +82,23 @@ body::before {
 .artist {
   font-size: 14px;
   color: #aaa;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+.progressContainer {
+  width: 100%;
+  height: 5px;
+  background: #333;
+  border-radius: 5px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progressBar {
+  width: 0%;
+  height: 100%;
+  background: #1db954;
+  transition: width 3s linear;
 }
 
 button {
@@ -71,12 +108,14 @@ button {
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 #message {
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 14px;
-  display: none;
+  opacity: 0;
+  transition: opacity 1.5s ease;
   color: #ff4d6d;
 }
 </style>
@@ -91,20 +130,34 @@ button {
   <div class="song">One Rose 🌹</div>
   <div class="artist">For Mahiii</div>
 
+  <div class="progressContainer">
+    <div class="progressBar" id="progress"></div>
+  </div>
+
   <button onclick="playSong()">▶</button>
 
   <div id="message">
     Ne “I love you” nu en kitta sollama irundhalum sari…<br><br>
-    Un love ah express pannalum sari…<br><br>
     Enaku theriyum Mahiii nee enna evlo love panra nu.<br><br>
-    Anyway… I love you so much Mahiii 💋🤍
+    I love you so much 💋🤍
   </div>
 
 </div>
 
 <script>
 function playSong() {
-  document.getElementById("message").style.display = "block";
+  document.getElementById("progress").style.width = "100%";
+  document.getElementById("message").style.opacity = "1";
+}
+
+/* Generate floating petals */
+for (let i = 0; i < 15; i++) {
+  let petal = document.createElement("div");
+  petal.className = "petal";
+  petal.innerHTML = "🌹";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(petal);
 }
 </script>
 
