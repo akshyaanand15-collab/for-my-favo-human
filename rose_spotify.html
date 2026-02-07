@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Now Playing 🎧</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Blurred background */
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('us.jpg') center/cover no-repeat;
+  filter: blur(25px) brightness(40%);
+  z-index: -1;
+}
+
+/* Spotify Card */
+.player {
+  background: rgba(20,20,20,0.9);
+  width: 320px;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 40px #ff1a1a40;
+  color: white;
+}
+
+/* Album Cover */
+.cover {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 20px #ff1a1a80;
+  transition: transform 0.4s ease;
+}
+
+.cover:hover {
+  transform: scale(1.05);
+}
+
+.song {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.artist {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+button {
+  background: #1db954;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 14px;
+  display: none;
+  color: #ff4d6d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+
+  <img src="us.jpg" class="cover">
+
+  <div class="song">One Rose 🌹</div>
+  <div class="artist">For Mahiii</div>
+
+  <button onclick="playSong()">▶</button>
+
+  <div id="message">
+    Ne “I love you” nu en kitta sollama irundhalum sari…<br><br>
+    Un love ah express pannalum sari…<br><br>
+    Enaku theriyum Mahiii nee enna evlo love panra nu.<br><br>
+    Anyway… I love you so much Mahiii 💋🤍
+  </div>
+
+</div>
+
+<script>
+function playSong() {
+  document.getElementById("message").style.display = "block";
+}
+</script>
+
+</body>
+</html>
