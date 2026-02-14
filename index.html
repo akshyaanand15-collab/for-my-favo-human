@@ -2,162 +2,192 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Now Playing 🎧</title>
+<title>Our Love Story ❤️</title>
 
 <style>
 body {
   margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#ffd6e8,#fff1f7,#e0f7ff);
+  overflow: hidden;
+  text-align: center;
+  color: #ff4d6d;
+  transition: 1s;
+}
+
+/* Floating hearts & kisses */
+.floating {
+  position: absolute;
+  font-size: 22px;
+  animation: float 8s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* Sections */
+.section {
+  position: absolute;
+  width: 100%;
   height: 100vh;
-  font-family: Arial, sans-serif;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  position: relative;
+  flex-direction: column;
+  animation: fadeIn 1s ease forwards;
 }
 
-/* Blurred background */
-body::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url('us.jpg') center/cover no-repeat;
-  filter: blur(25px) brightness(40%);
-  z-index: -2;
+.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-/* Floating petals */
-.petal {
-  position: absolute;
-  top: -20px;
-  font-size: 20px;
-  animation: fall linear infinite;
-  opacity: 0.6;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-  }
-}
-
-/* Card */
-.player {
-  background: rgba(20,20,20,0.9);
-  width: 320px;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 0 30px #ff4d6d60;
-  color: white;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 20px #ff4d6d40; }
-  to { box-shadow: 0 0 40px #ff4d6d80; }
-}
-
-/* Album Cover */
-.cover {
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 15px;
-  animation: slowZoom 6s infinite alternate;
-}
-
-@keyframes slowZoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
-}
-
-.song {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.artist {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 15px;
-}
-
-.progressContainer {
-  width: 100%;
-  height: 5px;
-  background: #333;
-  border-radius: 5px;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-.progressBar {
-  width: 0%;
-  height: 100%;
-  background: #1db954;
-  transition: width 3s linear;
-}
-
+/* Buttons */
 button {
-  background: #1db954;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 30px;
   border: none;
-  padding: 12px 18px;
-  border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
-#message {
-  margin-top: 15px;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
+.yes { background: #ff4d6d; color:white; }
+.no { background: white; color:#ff4d6d; border:2px solid #ff4d6d; }
+.videoBtn { background:white; color:#ff4d6d; border:2px solid #ff4d6d; }
+
+/* Video Frame */
+.videoFrame {
+  border: 8px solid white;
+  border-radius: 25px;
+  padding: 10px;
+  background: rgba(255,255,255,0.6);
+  box-shadow: 0 0 25px rgba(255,77,109,0.5);
+}
+
+video {
+  width: 85%;
+  border-radius: 20px;
+}
+
+/* Final Frame */
+.finalFrame {
+  background: rgba(255,255,255,0.8);
+  padding: 25px;
+  border-radius: 25px;
+  width: 85%;
+  max-width: 350px;
+  box-shadow: 0 0 35px rgba(255,77,109,0.7);
+  border: 3px solid white;
+}
+
+.finalText {
   color: #ff4d6d;
+  font-size: 14px;
+  line-height: 1.6;
 }
 </style>
 </head>
 
 <body>
 
-<div class="player">
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
 
-  <img src="us.jpg" class="cover">
+<!-- Floating emojis -->
+<script>
+for(let i=0;i<30;i++){
+  let e=document.createElement("div");
+  e.className="floating";
+  e.innerHTML=["❤️","🤍","💋"][Math.floor(Math.random()*3)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(e);
+}
+</script>
 
-  <div class="song">One Rose 🌹</div>
-  <div class="artist">For Mahiii</div>
+<!-- Intro -->
+<div class="section active" id="intro">
+  <h2>Mahiii ❤️</h2>
+  <p>Ready to play our love game? 😌</p>
+  <button class="yes" onclick="show('question')">Start 💕</button>
+</div>
 
-  <div class="progressContainer">
-    <div class="progressBar" id="progress"></div>
+<!-- Question -->
+<div class="section" id="question">
+  <h2>Unakku enna pidikkuma? 🥺</h2>
+  <button class="yes" onclick="yesScene()">YES ❤️</button>
+  <button class="no" onclick="noScene()">NO 😏</button>
+</div>
+
+<!-- YES -->
+<div class="section" id="yes">
+  <h2>I knew it 😍</h2>
+  <div class="videoFrame">
+    <video controls autoplay>
+      <source src="video1.mp4" type="video/mp4">
+    </video>
   </div>
+  <button class="videoBtn" onclick="show('voice')">Listen My Heart 💌</button>
+</div>
 
-  <button onclick="playSong()">▶</button>
-
-  <div id="message">
-    Ne “I love you” nu en kitta sollama irundhalum sari…<br><br>
-    Enaku theriyum Mahiii nee enna evlo love panra nu.<br><br>
-    I love you so much 💋🤍
+<!-- NO -->
+<div class="section" id="no">
+  <h2>NO ah? 😭</h2>
+  <p>My heart broke a little 💔</p>
+  <div class="videoFrame">
+    <video controls autoplay>
+      <source src="video2.mp4" type="video/mp4">
+    </video>
   </div>
+  <button class="yes" onclick="yesScene()">Okay Fine YES 😅</button>
+</div>
 
+<!-- Voice -->
+<div class="section" id="voice">
+  <h2>One last thing… 🤍</h2>
+  <button class="yes" onclick="playVoice()">Play My Voice 💋</button>
+  <audio id="voiceNote">
+    <source src="voice.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- Final Note -->
+<div class="section" id="finalNote">
+  <div class="finalFrame">
+    <h2>One More Thing… 🤍</h2>
+    <p class="finalText">
+      Enaku kedaikatha ellathaiyum nee kudukra...<br><br>
+      Incase evlo nee enna vittu velagi ponaalum,<br>
+      naan unna vittu pove maten. 🤍
+    </p>
+  </div>
 </div>
 
 <script>
-function playSong() {
-  document.getElementById("progress").style.width = "100%";
-  document.getElementById("message").style.opacity = "1";
+function show(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
-
-/* Generate floating petals */
-for (let i = 0; i < 15; i++) {
-  let petal = document.createElement("div");
-  petal.className = "petal";
-  petal.innerHTML = "🌹";
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = (5 + Math.random() * 5) + "s";
-  document.body.appendChild(petal);
+function yesScene(){
+  show("yes");
+}
+function noScene(){
+  show("no");
+}
+function playVoice(){
+  const voice=document.getElementById("voiceNote");
+  voice.play();
+  voice.onended=function(){
+    show("finalNote");
+  }
 }
 </script>
 
